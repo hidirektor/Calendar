@@ -11,6 +11,7 @@
     <children>
         <DatePicker fx:id="datePicker" layoutX="45.0" layoutY="27.0" promptText="Tarih Seç" />
         <Button layoutX="225.0" layoutY="27.0" mnemonicParsing="false" onAction="#showEvents" text="Göster" />
+        <Button layoutX="280.0" layoutY="27.0" mnemonicParsing="false" onAction="#resetEvents" text="Sıfırla" />
         <Label fx:id="usernameLabel" layoutX="14.0" layoutY="5.0" />
         <TableView fx:id="eventTable" layoutX="45.0" layoutY="80.0" prefHeight="280.0" prefWidth="510.0">
             <columns>

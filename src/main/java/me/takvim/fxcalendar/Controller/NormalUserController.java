@@ -46,6 +46,7 @@ public class NormalUserController {
     private TableColumn<Event, String> eventDescriptionColumn;
 
     private String userName;
+    private boolean selectedStat = false;
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -122,7 +123,7 @@ public class NormalUserController {
         eventTable.getItems().setAll(events);
 
         if (events.isEmpty()) {
-            showAlert("Bilgi", null, "Seçtiğiniz tarihte bir olay eklenmemiş.");
+            showAlert("Bilgi", null, "Seçtiğiniz tarihte bir olay eklenmemiş.", Alert.AlertType.ERROR);
             events = readEventsFromFile(userName);
             populateEventTable(events);
         }
@@ -134,13 +135,23 @@ public class NormalUserController {
         if (selectedDate != null) {
             List<Event> events = readEventsFromFileWDate(userName, selectedDate);
             populateEventTable(events);
+            selectedStat = true;
         } else {
-            showAlert("Hata", null, "Lütfen bir tarih seçin.");
+            showAlert("Hata", null, "Lütfen bir tarih seçin.", Alert.AlertType.ERROR);
         }
     }
 
-    private void showAlert(String title, String header, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    @FXML
+    private void resetEvents() {
+        if(selectedStat) {
+            loadEvents();
+            showAlert("Başarılı", null, "Tablo yeniden oluşturuldu !", Alert.AlertType.INFORMATION);
+        } else {
+            showAlert("Hata", null, "Bunun için önce bir tarih seçin.", Alert.AlertType.ERROR);
+        }
+    }
+    private void showAlert(String title, String header, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
