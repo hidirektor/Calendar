@@ -1,11 +1,8 @@
-package me.takvim.glsm;
+package me.takvim.fxcalendar.Controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -61,7 +58,7 @@ public class CalendarViewController {
         LocalDate firstDayOfMonth = currentYearMonth.atDay(1);
         int dayOfWeek = firstDayOfMonth.getDayOfWeek().getValue();
 
-        // Pazartesiye denk gelen günü hesapla
+        // Haftanın hangi gününe denk geldiğine göre ay başlangıcını yerleştir.
         int startingDayOffset = dayOfWeek < DayOfWeek.MONDAY.getValue()
                 ? 7 - (DayOfWeek.MONDAY.getValue() - dayOfWeek)
                 : dayOfWeek - DayOfWeek.MONDAY.getValue();

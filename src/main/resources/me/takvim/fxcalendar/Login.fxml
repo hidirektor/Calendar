@@ -7,7 +7,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.takvim.glsm.LoginController">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.takvim.fxcalendar.Controller.LoginController">
     <padding>
         <Insets top="50" right="50" bottom="50" left="50"/>
     </padding>
@@ -25,5 +27,11 @@
     <Label fx:id="statusLabel" style="-fx-text-fill: red;"/>
 
     <Button text="Kayıt Ol" onAction="#registerButtonClicked" fx:id="registerButton"/>
+
+    <ImageView fx:id="meteor" fitHeight="80.0" fitWidth="80.0" layoutX="360.0" layoutY="-80.0" preserveRatio="true">
+        <image>
+            <Image url="@meteor.png" />
+        </image>
+    </ImageView>
 
 </VBox>

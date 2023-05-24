@@ -1,4 +1,4 @@
-package me.takvim.glsm;
+package me.takvim.fxcalendar.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import me.takvim.fxcalendar.Main;
 
 import java.io.IOException;
 
@@ -33,10 +34,6 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Burada giriş işlemlerini gerçekleştir ve kullanıcıyı yönlendir
-        // Eğer giriş başarılı ise, kullanıcının UserType'ını kontrol ederek ilgili ekrana yönlendir.
-
-        // Örnek bir kontrol
         if (username.equals("admin") && password.equals("admin123")) {
             redirectToAdminScreen();
         } else {
@@ -46,14 +43,12 @@ public class LoginController {
 
     public void registerButtonClicked() {
         try {
-            // Kayıt ol ekranını yükle
             Parent registrationRoot = FXMLLoader.load(Main.class.getResource("Registration.fxml"));
             Scene registrationScene = new Scene(registrationRoot);
 
-            // Geçerli sahneyi al
             Stage currentStage = (Stage) registerButton.getScene().getWindow();
 
-            // Kayıt ol ekranına yönlendir
+            currentStage.setResizable(false);
             currentStage.setScene(registrationScene);
             currentStage.setTitle("Kayıt Ol");
         } catch (IOException e) {
@@ -64,14 +59,11 @@ public class LoginController {
 
     private void redirectToAdminScreen() {
         try {
-            // Admin ekranını yükle
             Parent adminRoot = FXMLLoader.load(Main.class.getResource("admin.fxml"));
             Scene adminScene = new Scene(adminRoot);
 
-            // Geçerli sahneyi al
             Stage currentStage = (Stage) registerButton.getScene().getWindow();
 
-            // Admin ekranına yönlendir
             currentStage.setScene(adminScene);
             currentStage.setTitle("Admin Ekranı");
         } catch (IOException e) {
@@ -82,19 +74,15 @@ public class LoginController {
 
     private void redirectToNormalUserScreen() {
         try {
-            // Normal kullanıcı ekranını yükle
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("normalUser.fxml"));
             Parent userRoot = loader.load();
             Scene userScene = new Scene(userRoot);
 
-            // Geçerli sahneyi al
             Stage currentStage = (Stage) registerButton.getScene().getWindow();
 
-            // Normal kullanıcı ekranına yönlendir
             currentStage.setScene(userScene);
             currentStage.setTitle("Normal Kullanıcı Ekranı");
 
-            // Normal kullanıcı ekranının kontrolcüsünü al
             NormalUserController userController = loader.getController();
             userController.setUserName(usernameField.getText());
             userController.loadEvents();

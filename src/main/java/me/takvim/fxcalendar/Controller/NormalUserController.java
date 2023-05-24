@@ -1,18 +1,23 @@
-package me.takvim.glsm;
+package me.takvim.fxcalendar.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import me.takvim.fxcalendar.event.Event;
+import me.takvim.fxcalendar.Main;
 
 import java.io.*;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class NormalUserController {
 
@@ -144,14 +149,13 @@ public class NormalUserController {
 
     public void backButtonClicked() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("login.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
 
-            // Mevcut pencereyi kapat
             Stage currentStage = (Stage) usernameLabel.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
@@ -162,7 +166,7 @@ public class NormalUserController {
     @FXML
     private void addEventButtonClicked() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("eventAdd.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("eventAdd.fxml"));
             Parent root = loader.load();
 
             EventAddController eventAddController = loader.getController();
@@ -171,6 +175,7 @@ public class NormalUserController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.setTitle("Olay Oluştur");
             stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/ikon.png")));
             stage.show();
@@ -192,6 +197,70 @@ public class NormalUserController {
             alert.setContentText("Lütfen silmek için bir olay seçin.");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void updateEventButtonClicked() {
+        Event selectedEvent = eventTable.getSelectionModel().getSelectedItem();
+        if(selectedEvent != null) {
+            String islemZamani = selectedEvent.getOperationTime();
+            String baslangicZamani = selectedEvent.getStartTime();
+            String bitisZamani = selectedEvent.getEndTime();
+            String olayTipi = selectedEvent.getEventType();
+            String olayAciklama = selectedEvent.getEventDescription();
+            int satirNo = findLineNumber(userName, islemZamani, baslangicZamani, bitisZamani, olayTipi, olayAciklama);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate oldDate = LocalDate.parse(islemZamani, formatter);
+            try {
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("updateEvent.fxml"));
+                Parent root = loader.load();
+
+                UpdateController updateController = loader.getController();
+                updateController.setOldData(islemZamani, baslangicZamani, bitisZamani, olayTipi, olayAciklama, satirNo, oldDate);
+                updateController.setUserName(userName);
+                updateController.setEventTable(eventTable);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setResizable(false);
+                stage.setTitle("Olay Güncelle");
+                stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/ikon.png")));
+                stage.show();
+                updateController.updateFields(oldDate);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Hata");
+            alert.setHeaderText(null);
+            alert.setContentText("Lütfen güncellemek için bir olay seçin.");
+            alert.showAndWait();
+        }
+    }
+
+    private int findLineNumber(String userName, String islemZamani, String baslangicZamani, String bitisZamani, String olayTipi, String olayAciklama) {
+        String fileName = "events.txt";
+        String tempFileName = "events_temp.txt";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFileName))) {
+
+            String data = userName + "," + islemZamani + "," + baslangicZamani + "," + bitisZamani + "," + olayTipi + "," + olayAciklama;
+            String line;
+            int tempLineNo = 1;
+
+            while((line = reader.readLine()) != null) {
+                if(!line.equals(data)) {
+                    tempLineNo++;
+                } else {
+                    return tempLineNo;
+                }
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     private void deleteEventFromFile(Event event) {
@@ -222,7 +291,6 @@ public class NormalUserController {
             e.printStackTrace();
         }
 
-        // Dosya adlarını değiştir
         File oldFile = new File(fileName);
         File newFile = new File(tempFileName);
         if (oldFile.delete() && newFile.renameTo(oldFile)) {
@@ -244,6 +312,7 @@ public class NormalUserController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.setTitle("Takvim");
             stage.getIcons().add(new Image(Main.class.getResourceAsStream("/icons/ikon.png")));
             stage.show();

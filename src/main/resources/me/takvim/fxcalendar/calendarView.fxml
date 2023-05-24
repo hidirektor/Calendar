@@ -5,13 +5,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.shape.Rectangle?>
 
-<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.takvim.glsm.CalendarViewController"
+<BorderPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.takvim.fxcalendar.Controller.CalendarViewController"
             prefWidth="320.0" prefHeight="300.0">
     <center>
         <GridPane fx:id="calendarGrid" alignment="CENTER" translateY="25">
-            <!-- Takvim gridi -->
+            <!-- Takvim -->
         </GridPane>
     </center>
     <bottom>

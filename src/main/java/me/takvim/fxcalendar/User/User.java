@@ -1,4 +1,4 @@
-package me.takvim.glsm;
+package me.takvim.fxcalendar.User;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package me.takvim.glsm;
+package me.takvim.fxcalendar.User;
 
 public enum UserType {
     NORMAL,

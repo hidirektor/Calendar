@@ -1,4 +1,4 @@
-package me.takvim.glsm;
+package me.takvim.fxcalendar.event;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

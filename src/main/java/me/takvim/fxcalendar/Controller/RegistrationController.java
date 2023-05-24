@@ -1,4 +1,4 @@
-package me.takvim.glsm;
+package me.takvim.fxcalendar.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import me.takvim.fxcalendar.Main;
+import me.takvim.fxcalendar.User.UserType;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -48,7 +50,6 @@ public class RegistrationController {
     private Button goBackButton;
 
     public void initialize() {
-        // ComboBox içeriğini ayarlayalım
         userTypeComboBox.setItems(FXCollections.observableArrayList(UserType.values()));
     }
 
@@ -63,9 +64,6 @@ public class RegistrationController {
         String address = addressField.getText();
         UserType userType = userTypeComboBox.getValue();
 
-        // Burada kayıt işlemlerini gerçekleştir ve verileri dosyaya yaz
-
-        // Örnek olarak, verileri "db.txt" dosyasına satır satır yazalım.
         String data = username + "," + firstName + "," + lastName + "," + password + "," + email + "," + tcNo + "," + phone + "," + address + "," + userType;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("db.txt", true))) {
@@ -74,9 +72,8 @@ public class RegistrationController {
             writer.flush();
 
             statusLabel.setText("Kayıt başarılı!");
-            clearFields(); // Alanları temizle
+            clearFields();
 
-            // Kayıt başarılı olduktan sonra Giriş yapma ekranına yönlendir
             redirectToLoginScreen();
         } catch (IOException e) {
             statusLabel.setText("Kayıt sırasında bir hata oluştu.");
@@ -87,14 +84,11 @@ public class RegistrationController {
     @FXML
     private void goBackButtonClicked() {
         try {
-            // Giriş yapma ekranını yükle
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            Parent loginRoot = FXMLLoader.load(Main.class.getResource("Login.fxml"));
             Scene loginScene = new Scene(loginRoot);
 
-            // Geçerli sahneyi al
             Stage currentStage = (Stage) goBackButton.getScene().getWindow();
 
-            // Giriş yapma ekranına yönlendir
             currentStage.setScene(loginScene);
             currentStage.setTitle("Giriş Yap");
         } catch (IOException e) {
@@ -104,14 +98,11 @@ public class RegistrationController {
 
     private void redirectToLoginScreen() {
         try {
-            // Giriş yapma ekranını yükle
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("Login.fxml"));
+            Parent loginRoot = FXMLLoader.load(Main.class.getResource("Login.fxml"));
             Scene loginScene = new Scene(loginRoot);
 
-            // Geçerli sahneyi al
             Stage currentStage = (Stage) goBackButton.getScene().getWindow();
 
-            // Giriş yapma ekranına yönlendir
             currentStage.setScene(loginScene);
             currentStage.setTitle("Giriş Yap");
         } catch (IOException e) {

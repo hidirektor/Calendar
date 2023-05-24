@@ -6,8 +6,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.util.StringConverter?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.takvim.glsm.NormalUserController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.takvim.fxcalendar.Controller.NormalUserController">
     <children>
         <DatePicker fx:id="datePicker" layoutX="45.0" layoutY="27.0" promptText="Tarih Seç" />
         <Button layoutX="225.0" layoutY="27.0" mnemonicParsing="false" onAction="#showEvents" text="Göster" />
@@ -22,8 +22,9 @@
             </columns>
         </TableView>
         <Button layoutX="45.0" layoutY="365.0" mnemonicParsing="false" onAction="#backButtonClicked" text="Çıkış" />
-        <Button layoutX="138.0" layoutY="365.0" mnemonicParsing="false" onAction="#addEventButtonClicked" text="Olay Ekle" />
+        <Button layoutX="136.0" layoutY="365.0" mnemonicParsing="false" onAction="#addEventButtonClicked" text="Olay Ekle" />
         <Button layoutX="231.0" layoutY="365.0" mnemonicParsing="false" onAction="#deleteEventButtonClicked" text="Olayı Sil" />
-        <Button layoutX="326.0" layoutY="365.0" mnemonicParsing="false" onAction="#openCalendarView" text="Takvim Görünümü" />
+        <Button layoutX="290.0" layoutY="365.0" mnemonicParsing="false" onAction="#updateEventButtonClicked" text="Olayı Güncelle" />
+        <Button layoutX="421.0" layoutY="365.0" mnemonicParsing="false" onAction="#openCalendarView" text="Takvim Görünümü" />
     </children>
 </AnchorPane>

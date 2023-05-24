@@ -1,4 +1,4 @@
-package me.takvim.glsm;
+package me.takvim.fxcalendar.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
+import me.takvim.fxcalendar.Main;
+import me.takvim.fxcalendar.User.User;
+import me.takvim.fxcalendar.User.UserType;
 
 import java.io.*;
 
@@ -37,14 +40,14 @@ public class AdminController {
         userListView.setItems(userList);
         userListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        refreshUserList(); // Kullanıcı listesini başlangıçta yükle
+        refreshUserList();
 
         deleteButton.setOnAction(event -> deleteButtonClicked());
         refreshButton.setOnAction(event -> refreshButtonClicked());
     }
 
     private void refreshUserList() {
-        userList.clear(); // Önceki kullanıcı listesini temizle
+        userList.clear();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("db.txt"))) {
             String line;
@@ -82,11 +85,6 @@ public class AdminController {
     }
 
     private void deleteUserFromFile(User user) {
-        // Dosyadan kullanıcıyı silmek için ilgili işlemleri gerçekleştir
-        // Örnek olarak, kullanıcıları tuttuğunuz bir "db.txt" dosyasından satır satır okuyup kullanıcıyı silme işlemini yapabilirsiniz.
-        // Burada dosya üzerinde işlem yapılacaksa gerekli kontroller ve işlemler yapılmalıdır.
-        // Aşağıda, örnek bir kullanıcı silme işlemi verilmiştir.
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("db.txt"))) {
             for (User existingUser : userList) {
                 if (!existingUser.equals(user)) {
@@ -116,14 +114,11 @@ public class AdminController {
     @FXML
     private void backButtonClicked() {
         try {
-            // Giriş yapma ekranını yükle
             Parent loginRoot = FXMLLoader.load(Main.class.getResource("Login.fxml"));
             Scene loginScene = new Scene(loginRoot);
 
-            // Geçerli sahneyi al
             Stage currentStage = (Stage) goBackButton.getScene().getWindow();
 
-            // Giriş yapma ekranına yönlendir
             currentStage.setScene(loginScene);
             currentStage.setTitle("Giriş Yap");
         } catch (IOException e) {
